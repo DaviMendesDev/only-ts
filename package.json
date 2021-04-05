@@ -1,0 +1,24 @@
+{
+  "name": "only-ts",
+  "version": "1.0.0",
+  "description": "A typescript library based on [only](https://github.com/tj/node-only) project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaviMendesDev/only-ts.git"
+  },
+  "keywords": [],
+  "author": "DaviMendesDev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DaviMendesDev/only-ts/issues"
+  },
+  "homepage": "https://github.com/DaviMendesDev/only-ts#readme",
+  "devDependencies": {
+    "typescript": "^4.2.3"
+  }
+}
