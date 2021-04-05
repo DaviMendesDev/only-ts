@@ -4,7 +4,8 @@ export default function only(obj: M, keys: string[]): object {
   const result: M = new Object();
 
   for (const key of keys) {
-    result[key] = obj[key];
+    if (obj[key])
+      result[key] = obj[key];
   }
 
   return result;
