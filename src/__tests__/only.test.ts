@@ -1,23 +1,23 @@
 import only, { M } from '../index';
 
-const person_o: object = {
+const personObject: object = {
     name: "Phillipi",
     age: 18,
     birthday: new Date('06/06/2001')
 };
 
-const person_a: M = [];
+const personArray: M = [];
 
-person_a["name"] = "Phillipi";
-person_a["age"] = 18,
-person_a["birthday"] = new Date('06/06/2001');
+personArray[("name" as string)] = "Phillipi";
+personArray[("age" as string)] = 18,
+personArray[("birthday" as string)] = new Date('06/06/2001');
 
 const emptyObject = {};
 const emptyArray: M = [];
 
-test(`should return only the 'age' from 'person_o' object`, () => {
+test(`should return only the 'age' from 'personObject' object`, () => {
     const anAgeOnlyObject = { age: 18 };
-    const theCallOnly = only(person_o, [ 'age' ]);
+    const theCallOnly = only(personObject, [ 'age' ]);
 
     // console.log(anAgeOnlyObject);
     // console.log(theCallOnly);
@@ -25,9 +25,9 @@ test(`should return only the 'age' from 'person_o' object`, () => {
     expect(theCallOnly).toEqual(anAgeOnlyObject);
 })
 
-test(`should return only the 'age' from 'person_a' array`, () => {
+test(`should return only the 'age' from 'personArray' array`, () => {
     const anAgeOnlyObject = { age: 18 };
-    const theCallOnly = only(person_a, [ 'age' ]);
+    const theCallOnly = only(personArray, [ 'age' ]);
 
     // console.log(anAgeOnlyObject);
     // console.log(theCallOnly);
@@ -56,7 +56,7 @@ test(`should return empty object ({ }) from empty object ({ })`, () => {
 })
 
 test(`should return empty object ({ }) from object that doesn't have the given keys`, () => {
-    const wrongObject = only(person_o, ['name']);
+    const wrongObject = only(personObject, ['name']);
 
     const anEmptyObject = { };
     const theCallOnly = only(wrongObject, [ 'age' ]);
@@ -68,7 +68,7 @@ test(`should return empty object ({ }) from object that doesn't have the given k
 })
 
 test(`should return empty object ({ }) from array that doesn't have the given keys`, () => {
-    const wrongObject = only(person_a, ['name']);
+    const wrongObject = only(personArray, ['name']);
 
     const anEmptyObject = { };
     const theCallOnly = only(wrongObject, [ 'age' ]);
