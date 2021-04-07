@@ -1,25 +1,22 @@
 export type M = { [key: string]: any };
 
-function getValue (obj: M, key: string): any {
-  if (key.indexOf('.') === -1)
-    return obj[key];
-  
+function getValue(obj: M, key: string): any {
+  if (key.indexOf('.') === -1) return obj[key];
+
   const nextNestedObject: string = key.split('.')[0];
   key = key.replace(`${nextNestedObject}.`, '');
 
   return getValue(obj[nextNestedObject], key);
 }
 
-function getAlias (key: string): string {
-  if (key.indexOf(' as ') === -1)
-    return key;
+function getAlias(key: string): string {
+  if (key.indexOf(' as ') === -1) return key;
 
   return key.split(' as ').pop()!.trim();
 }
 
-function getOriginalKey (key: string): string {
-  if (key.indexOf(' as ') === -1)
-    return key;
+function getOriginalKey(key: string): string {
+  if (key.indexOf(' as ') === -1) return key;
 
   return key.split(' as ')[0]!.trim();
 }
@@ -42,7 +39,7 @@ export default function only(obj: M, keys: string[] | string): object {
 export function onlyToReq(req: Request, keys: string[] | string): object {
   if (!req.body) return {};
 
-  const body: M = req.body  as  M;
+  const body: M = req.body as M;
 
   return only(body, keys);
 }
