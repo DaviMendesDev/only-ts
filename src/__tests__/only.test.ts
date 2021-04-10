@@ -25,6 +25,10 @@ personArray['birthday'] = defaultValues.birthday;
 const emptyObject = {};
 const emptyArray: M = [];
 
+const nestedObject: object = { user: personObject };
+const nestedArray: M = [];
+nestedArray["user"] = personArray;
+
 test(`should return only the 'age' from 'personObject' object`, () => {
   const anAgeOnlyObject = { age: defaultValues.age };
   const theCallOnly = only(personObject, ['age']);
@@ -110,3 +114,71 @@ test(`should return only the 'age' from string key: ('age birthday')`, () => {
 
   expect(theCallOnly).toEqual(anAgeOnlyObject);
 });
+
+test(`should return 'name' as 'username' from 'personObject' object` , () => {
+  const usernameAliasesObject = { username: defaultValues.name };
+  const theCallOnly = only(personObject, ['name as username']);
+
+  // console.log(usernameAliasesObject);
+  // console.log(theCallOnly);
+
+  expect(theCallOnly).toEqual(usernameAliasesObject);
+})
+
+test(`should return 'name' as 'username' from 'personArray' array` , () => {
+  const usernameAliasesObject = { username: defaultValues.name };
+  const theCallOnly = only(personArray, ['name as username']);
+
+  // console.log(usernameAliasesObject);
+  // console.log(theCallOnly);
+
+  expect(theCallOnly).toEqual(usernameAliasesObject);
+})
+
+test(`should return 'name' as 'username' from 'personArray' array` , () => {
+  const usernameAliasesObject = { username: defaultValues.name };
+  const theCallOnly = only(personArray, ['name as username']);
+
+  // console.log(usernameAliasesObject);
+  // console.log(theCallOnly);
+
+  expect(theCallOnly).toEqual(usernameAliasesObject);
+})
+
+test(`should return 'user.name' as 'username' from nested object` , () => {
+  const usernameAliasesObject = { username: defaultValues.name };
+  const theCallOnly = only(nestedObject, ['user.name as username']);
+
+  // console.log(usernameAliasesObject);
+  // console.log(theCallOnly);
+
+  expect(theCallOnly).toEqual(usernameAliasesObject);
+})
+
+test(`should return 'user.name' as 'username' from nested array` , () => {
+  const usernameAliasesObject = { username: defaultValues.name };
+  const theCallOnly = only(nestedArray, ['user.name as username']);
+
+  // console.log(usernameAliasesObject);
+  // console.log(theCallOnly);
+
+  expect(theCallOnly).toEqual(usernameAliasesObject);
+})
+
+test(`should return 'user.name' from nested object that don't passes an aliases to properties` , () => {
+  const theCallOnly = only(nestedObject, ['user.name']);
+
+  // console.log(usernameAliasesObject);
+  // console.log(theCallOnly);
+
+  expect(theCallOnly).toEqual(emptyObject);
+})
+
+test(`should return 'user.name' from nested array that don't passes an aliases to properties` , () => {
+  const theCallOnly = only(nestedArray, ['user.name']);
+
+  // console.log(usernameAliasesObject);
+  // console.log(theCallOnly);
+
+  expect(theCallOnly).toEqual(emptyArray);
+})
