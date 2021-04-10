@@ -1,36 +1,60 @@
 export type M = { [key: string]: any };
 
-function getValue(obj: M, key: string): any {
-  if (key.indexOf('.') === -1) return obj[key];
+type Key = {key: string, alias: string|null};
 
-  const nextNestedObject: string = key.split('.')[0];
-  key = key.replace(`${nextNestedObject}.`, '');
+function getValue (obj: M, key: string): any {
+  if (key.indexOf('.') === -1) {
+    return obj[key];
+  } else {
+    const leftSide = key.slice(0, key.indexOf('.'));
+    const rightSide = key.slice(key.indexOf('.') + 1);
 
-  return getValue(obj[nextNestedObject], key);
+    return getValue(obj[leftSide], rightSide);
+  }
 }
 
-function getAlias(key: string): string {
-  if (key.indexOf(' as ') === -1) return key;
-
-  return key.split(' as ').pop()!.trim();
+function separateKeyFromAlias(key: string): Key {
+  if (key.indexOf(' as ') === -1)
+    return { key: key, alias: null };
+  
+  return {
+    key: key.split(' as ')[0]!.trim(),
+    alias: key.split(' as ').pop()!.trim(),
+  };
 }
 
-function getOriginalKey(key: string): string {
-  if (key.indexOf(' as ') === -1) return key;
+function getAlias (key: string): string | null {
+  return separateKeyFromAlias(key).alias;
+}
 
-  return key.split(' as ')[0]!.trim();
+function getOriginalKey (key: string): string {
+  return separateKeyFromAlias(key).key;
+}
+
+function setValueToAlias (alias: string, value: any): M {
+  if (alias.indexOf('.') === -1) {
+    return { [alias]: value };
+  } else {
+    const leftSide = alias.slice(0, alias.indexOf('.'));
+    const rightSide = alias.slice(alias.indexOf('.') + 1);
+
+    return { [leftSide]: setValueToAlias(rightSide, value) };
+  }
 }
 
 export default function only(obj: M, keys: string[] | string): object {
-  const result: M = new Object();
+  let result: M = new Object();
 
   if (typeof keys === 'string') keys = keys.split(' ');
 
   for (let key of keys) {
-    const alias: string = getAlias(key);
+    const alias: string | null = getAlias(key);
     key = getOriginalKey(key);
+    
     const value = getValue(obj, key);
-    if (value) result[alias] = value;
+    // result = { ...result, ...setValueToAlias(alias ?? key, value) }
+    result = Object.assign(result, setValueToAlias(alias ?? key, value));
+    console.log(result);
   }
 
   return result;
