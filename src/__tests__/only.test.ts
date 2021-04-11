@@ -165,20 +165,42 @@ test(`should return 'user.name' as 'username' from nested array` , () => {
   expect(theCallOnly).toEqual(usernameAliasesObject);
 })
 
-test(`should return 'user.name' from nested object that don't passes an aliases to properties` , () => {
+test(`should return '{ user: { name: "${defaultValues.name}}}' from nested object that don't passes an aliases to properties` , () => {
+  const expected = { user: { name: defaultValues.name }};
   const theCallOnly = only(nestedObject, ['user.name']);
 
-  // console.log(usernameAliasesObject);
+  // console.log(expected);
   // console.log(theCallOnly);
 
-  expect(theCallOnly).toEqual(emptyObject);
+  expect(theCallOnly).toEqual(expected);
 })
 
-test(`should return 'user.name' from nested array that don't passes an aliases to properties` , () => {
+test(`should return '{ user: { name: "${defaultValues.name}}}' from nested array that don't passes an aliases to properties` , () => {
+  const expected = { user: { name: defaultValues.name }};
   const theCallOnly = only(nestedArray, ['user.name']);
 
-  // console.log(usernameAliasesObject);
+  // console.log(expected);
   // console.log(theCallOnly);
 
-  expect(theCallOnly).toEqual(emptyArray);
+  expect(theCallOnly).toEqual(expected);
+})
+
+test(`should return '{ user: { name: "${defaultValues.name}}}' from nested object that don't passes the alias 'person.name' to properties` , () => {
+  const expected = { person: { name: defaultValues.name }};
+  const theCallOnly = only(nestedObject, ['user.name as person.name']);
+
+  // console.log(expected);
+  // console.log(theCallOnly);
+
+  expect(theCallOnly).toEqual(expected);
+})
+
+test(`should return '{ person: { name: "${defaultValues.name}}}' from nested array that passes the alias 'person.name' to properties` , () => {
+  const expected = { person: { name: defaultValues.name }};
+  const theCallOnly = only(nestedArray, ['user.name as person.name']);
+
+  // console.log(expected);
+  // console.log(theCallOnly);
+
+  expect(theCallOnly).toEqual(expected);
 })
