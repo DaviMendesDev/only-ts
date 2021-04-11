@@ -1,8 +1,8 @@
 export type M = { [key: string]: any };
 
-export type Key = {key: string, alias: string|null};
+export type Key = { key: string; alias: string | null };
 
-function getValue (obj: M, key: string): any {
+function getValue(obj: M, key: string): any {
   if (key.indexOf('.') === -1) {
     return obj[key];
   } else {
@@ -14,24 +14,23 @@ function getValue (obj: M, key: string): any {
 }
 
 function separateKeyFromAlias(key: string): Key {
-  if (key.indexOf(' as ') === -1)
-    return { key: key, alias: null };
-  
+  if (key.indexOf(' as ') === -1) return { key, alias: null };
+
   return {
     key: key.split(' as ')[0]!.trim(),
     alias: key.split(' as ').pop()!.trim(),
   };
 }
 
-function getAlias (key: string): string | null {
+function getAlias(key: string): string | null {
   return separateKeyFromAlias(key).alias;
 }
 
-function getOriginalKey (key: string): string {
+function getOriginalKey(key: string): string {
   return separateKeyFromAlias(key).key;
 }
 
-function setValueToAlias (alias: string, value: any): M {
+function setValueToAlias(alias: string, value: any): M {
   if (alias.indexOf('.') === -1) {
     return { [alias]: value };
   } else {
@@ -42,14 +41,12 @@ function setValueToAlias (alias: string, value: any): M {
   }
 }
 
-export function deepMerge (obj1: M, obj2: M): M {
+export function deepMerge(obj1: M, obj2: M): M {
   let result: M = new Object();
 
   for (const key in obj2) {
-    if (key in obj1)
-      result[key] = deepMerge(obj1[key], obj2[key]);
-    else
-      result = { ...obj1, ...obj2 };
+    if (key in obj1) result[key] = deepMerge(obj1[key], obj2[key]);
+    else result = { ...obj1, ...obj2 };
   }
 
   return result;
@@ -63,11 +60,10 @@ export default function only(obj: M, keys: string[] | string): object {
   for (let key of keys) {
     const alias: string | null = getAlias(key);
     key = getOriginalKey(key);
-    
+
     const value = getValue(obj, key);
 
-    if (value)
-      result = deepMerge(result, setValueToAlias(alias ?? key, value));
+    if (value) result = deepMerge(result, setValueToAlias(alias ?? key, value));
   }
 
   return result;
@@ -76,7 +72,7 @@ export default function only(obj: M, keys: string[] | string): object {
 export function onlyToReq(req: Request, keys: string[] | string): object {
   if (!req.body) return {};
 
-  const body: M = req.body  as  M;
+  const body: M = req.body as M;
 
   return only(body, keys);
 }
