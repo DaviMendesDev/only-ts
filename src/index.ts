@@ -45,10 +45,8 @@ export function deepMerge(to: M, from: M): M {
   let result: M = to;
 
   for (const key in from) {
-    if (key in to)
-      result[key] = deepMerge(to[key], from[key]);
-    else
-      result = { ...to, ...from };
+    if (key in to) result[key] = deepMerge(to[key], from[key]);
+    else result = { ...to, ...from };
   }
 
   return result;

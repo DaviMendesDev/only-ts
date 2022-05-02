@@ -152,36 +152,57 @@ test(`should return '{ person: { name: "${defaultValues.name}}}' from nested arr
   expect(theCallOnly).toEqual(expected);
 });
 
-test(`should return '{ username: ${defaultValues.name} }' from '${JSON.stringify(nestedObject)}' that passes "user.name as username"`, () => {
+test(`should return '{ username: ${defaultValues.name} }' from '${JSON.stringify(
+  nestedObject,
+)}' that passes "user.name as username"`, () => {
   const expected = { username: defaultValues.name };
   const theCallOnly = only(nestedObject, ['user.name as username']);
 
   expect(theCallOnly).toEqual(expected);
 });
 
-test(`should return '${JSON.stringify({ username: defaultValues.name, age: defaultValues.age })}' from '${JSON.stringify(nestedObject)}' that passes "user.name as username"`, () => {
+test(`should return '${JSON.stringify({
+  username: defaultValues.name,
+  age: defaultValues.age,
+})}' from '${JSON.stringify(nestedObject)}' that passes "user.name as username"`, () => {
   const expected = { username: defaultValues.name, age: defaultValues.age };
   const theCallOnly = only(nestedObject, ['user.name as username', 'user.age as age']);
 
   expect(theCallOnly).toEqual(expected);
 });
 
-test(`should return '${JSON.stringify({ username: defaultValues.name, user: { age: defaultValues.age } })}' from '${JSON.stringify(nestedObject)}' that passes "user.name as username"`, () => {
+test(`should return '${JSON.stringify({
+  username: defaultValues.name,
+  user: { age: defaultValues.age },
+})}' from '${JSON.stringify(nestedObject)}' that passes "user.name as username"`, () => {
   const expected = { username: defaultValues.name, user: { age: defaultValues.age } };
   const theCallOnly = only(nestedObject, ['user.name as username', 'user.age']);
 
   expect(theCallOnly).toEqual(expected);
 });
 
-test(`should return '${JSON.stringify({ username: defaultValues.name, user: { age: defaultValues.age } })}' from '${JSON.stringify(nestedObject)}' that passes "user.name as username"`, () => {
+test(`should return '${JSON.stringify({
+  username: defaultValues.name,
+  user: { age: defaultValues.age },
+})}' from '${JSON.stringify(nestedObject)}' that passes "user.name as username"`, () => {
   const expected = { username: defaultValues.name, user: { age: defaultValues.age, birthday: defaultValues.birthday } };
-  const theCallOnly = only(nestedObject, ['user.name as username', 'user.age as user.age', 'user.birthday as user.birthday']);
+  const theCallOnly = only(nestedObject, [
+    'user.name as username',
+    'user.age as user.age',
+    'user.birthday as user.birthday',
+  ]);
 
   expect(theCallOnly).toEqual(expected);
 });
 
-test(`should return '${JSON.stringify({ username: defaultValues.name, user: { age: defaultValues.age } })}' from '${JSON.stringify(nestedObject)}' that passes "user.name as username"`, () => {
-  const expected = { person: { userData: { username: defaultValues.name } } , user: { age: defaultValues.age, birthday: defaultValues.birthday } };
+test(`should return '${JSON.stringify({
+  username: defaultValues.name,
+  user: { age: defaultValues.age },
+})}' from '${JSON.stringify(nestedObject)}' that passes "user.name as username"`, () => {
+  const expected = {
+    person: { userData: { username: defaultValues.name } },
+    user: { age: defaultValues.age, birthday: defaultValues.birthday },
+  };
   const theCallOnly = only(nestedObject, ['user.name as person.userData.username', 'user.age', 'user.birthday']);
 
   expect(theCallOnly).toEqual(expected);
