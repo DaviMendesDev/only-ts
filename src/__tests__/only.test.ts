@@ -1,4 +1,4 @@
-import only, { M } from '../index';
+import only, { M } from '../';
 
 interface Person {
   name: string;
@@ -16,25 +16,20 @@ const personObject: object = defaultValues;
 
 const personArray: M = [];
 
-personArray['name'] = defaultValues.name;
-personArray['age'] = defaultValues.age;
-personArray['birthday'] = defaultValues.birthday;
-
-// console.log(personObject, personArray);
+personArray.name = defaultValues.name;
+personArray.age = defaultValues.age;
+personArray.birthday = defaultValues.birthday;
 
 const emptyObject = {};
 const emptyArray: M = [];
 
 const nestedObject: object = { user: personObject };
 const nestedArray: M = [];
-nestedArray['user'] = personArray;
+nestedArray.user = personArray;
 
 test(`should return only the 'age' from 'personObject' object`, () => {
   const anAgeOnlyObject = { age: defaultValues.age };
   const theCallOnly = only(personObject, ['age']);
-
-  // console.log(anAgeOnlyObject);
-  // console.log(theCallOnly);
 
   expect(theCallOnly).toEqual(anAgeOnlyObject);
 });
@@ -43,9 +38,6 @@ test(`should return only the 'age' from 'personArray' array`, () => {
   const anAgeOnlyObject = { age: defaultValues.age };
   const theCallOnly = only(personArray, ['age']);
 
-  // console.log(anAgeOnlyObject);
-  // console.log(theCallOnly);
-
   expect(theCallOnly).toEqual(anAgeOnlyObject);
 });
 
@@ -53,18 +45,12 @@ test(`should return empty object ({ }) from empty array ([ ])`, () => {
   const anEmptyObject = {};
   const theCallOnly = only(emptyArray, ['age']);
 
-  // console.log(anEmptyObject);
-  // console.log(theCallOnly);
-
   expect(theCallOnly).toEqual(anEmptyObject);
 });
 
 test(`should return empty object ({ }) from empty object ({ })`, () => {
   const anEmptyObject = {};
   const theCallOnly = only(emptyObject, ['age']);
-
-  // console.log(anEmptyObject);
-  // console.log(theCallOnly);
 
   expect(theCallOnly).toEqual(anEmptyObject);
 });
@@ -75,9 +61,6 @@ test(`should return empty object ({ }) from object that doesn't have the given k
   const anEmptyObject = {};
   const theCallOnly = only(wrongObject, ['age']);
 
-  // console.log(anEmptyObject);
-  // console.log(theCallOnly);
-
   expect(theCallOnly).toEqual(anEmptyObject);
 });
 
@@ -87,18 +70,12 @@ test(`should return empty object ({ }) from array that doesn't have the given ke
   const anEmptyObject = {};
   const theCallOnly = only(wrongObject, ['age']);
 
-  // console.log(anEmptyObject);
-  // console.log(theCallOnly);
-
   expect(theCallOnly).toEqual(anEmptyObject);
 });
 
 test(`should return only the 'age' and 'birthday' from string key: ('age birthday')`, () => {
   const personObjectWithouName = { age: defaultValues.age, birthday: defaultValues.birthday };
   const theCallOnly = only(personObject, 'age birthday');
-
-  // console.log(personObjectWithouName);
-  // console.log(theCallOnly);
 
   expect(theCallOnly).toEqual(personObjectWithouName);
 });
@@ -109,9 +86,6 @@ test(`should return only the 'age' from string key: ('age birthday')`, () => {
   const anAgeOnlyObject = { age: defaultValues.age };
   const theCallOnly = only(personWithoutBirthday, 'age birthday');
 
-  // console.log(anAgeOnlyObject);
-  // console.log(theCallOnly);
-
   expect(theCallOnly).toEqual(anAgeOnlyObject);
 });
 
@@ -119,9 +93,6 @@ test(`should return 'name' as 'username' from 'personObject' object`, () => {
   const usernameAliasesObject = { username: defaultValues.name };
   const theCallOnly = only(personObject, ['name as username']);
 
-  // console.log(usernameAliasesObject);
-  // console.log(theCallOnly);
-
   expect(theCallOnly).toEqual(usernameAliasesObject);
 });
 
@@ -129,18 +100,12 @@ test(`should return 'name' as 'username' from 'personArray' array`, () => {
   const usernameAliasesObject = { username: defaultValues.name };
   const theCallOnly = only(personArray, ['name as username']);
 
-  // console.log(usernameAliasesObject);
-  // console.log(theCallOnly);
-
   expect(theCallOnly).toEqual(usernameAliasesObject);
 });
 
 test(`should return 'name' as 'username' from 'personArray' array`, () => {
   const usernameAliasesObject = { username: defaultValues.name };
   const theCallOnly = only(personArray, ['name as username']);
-
-  // console.log(usernameAliasesObject);
-  // console.log(theCallOnly);
 
   expect(theCallOnly).toEqual(usernameAliasesObject);
 });
@@ -149,18 +114,12 @@ test(`should return 'user.name' as 'username' from nested object`, () => {
   const usernameAliasesObject = { username: defaultValues.name };
   const theCallOnly = only(nestedObject, ['user.name as username']);
 
-  // console.log(usernameAliasesObject);
-  // console.log(theCallOnly);
-
   expect(theCallOnly).toEqual(usernameAliasesObject);
 });
 
 test(`should return 'user.name' as 'username' from nested array`, () => {
   const usernameAliasesObject = { username: defaultValues.name };
   const theCallOnly = only(nestedArray, ['user.name as username']);
-
-  // console.log(usernameAliasesObject);
-  // console.log(theCallOnly);
 
   expect(theCallOnly).toEqual(usernameAliasesObject);
 });
@@ -169,18 +128,12 @@ test(`should return '{ user: { name: "${defaultValues.name}}}' from nested objec
   const expected = { user: { name: defaultValues.name } };
   const theCallOnly = only(nestedObject, ['user.name']);
 
-  // console.log(expected);
-  // console.log(theCallOnly);
-
   expect(theCallOnly).toEqual(expected);
 });
 
 test(`should return '{ user: { name: "${defaultValues.name}}}' from nested array that don't passes an aliases to properties`, () => {
   const expected = { user: { name: defaultValues.name } };
   const theCallOnly = only(nestedArray, ['user.name']);
-
-  // console.log(expected);
-  // console.log(theCallOnly);
 
   expect(theCallOnly).toEqual(expected);
 });
@@ -189,9 +142,6 @@ test(`should return '{ user: { name: "${defaultValues.name}}}' from nested objec
   const expected = { person: { name: defaultValues.name } };
   const theCallOnly = only(nestedObject, ['user.name as person.name']);
 
-  // console.log(expected);
-  // console.log(theCallOnly);
-
   expect(theCallOnly).toEqual(expected);
 });
 
@@ -199,8 +149,40 @@ test(`should return '{ person: { name: "${defaultValues.name}}}' from nested arr
   const expected = { person: { name: defaultValues.name } };
   const theCallOnly = only(nestedArray, ['user.name as person.name']);
 
-  // console.log(expected);
-  // console.log(theCallOnly);
+  expect(theCallOnly).toEqual(expected);
+});
+
+test(`should return '{ username: ${defaultValues.name} }' from '${JSON.stringify(nestedObject)}' that passes "user.name as username"`, () => {
+  const expected = { username: defaultValues.name };
+  const theCallOnly = only(nestedObject, ['user.name as username']);
+
+  expect(theCallOnly).toEqual(expected);
+});
+
+test(`should return '${JSON.stringify({ username: defaultValues.name, age: defaultValues.age })}' from '${JSON.stringify(nestedObject)}' that passes "user.name as username"`, () => {
+  const expected = { username: defaultValues.name, age: defaultValues.age };
+  const theCallOnly = only(nestedObject, ['user.name as username', 'user.age as age']);
+
+  expect(theCallOnly).toEqual(expected);
+});
+
+test(`should return '${JSON.stringify({ username: defaultValues.name, user: { age: defaultValues.age } })}' from '${JSON.stringify(nestedObject)}' that passes "user.name as username"`, () => {
+  const expected = { username: defaultValues.name, user: { age: defaultValues.age } };
+  const theCallOnly = only(nestedObject, ['user.name as username', 'user.age']);
+
+  expect(theCallOnly).toEqual(expected);
+});
+
+test(`should return '${JSON.stringify({ username: defaultValues.name, user: { age: defaultValues.age } })}' from '${JSON.stringify(nestedObject)}' that passes "user.name as username"`, () => {
+  const expected = { username: defaultValues.name, user: { age: defaultValues.age, birthday: defaultValues.birthday } };
+  const theCallOnly = only(nestedObject, ['user.name as username', 'user.age as user.age', 'user.birthday as user.birthday']);
+
+  expect(theCallOnly).toEqual(expected);
+});
+
+test(`should return '${JSON.stringify({ username: defaultValues.name, user: { age: defaultValues.age } })}' from '${JSON.stringify(nestedObject)}' that passes "user.name as username"`, () => {
+  const expected = { person: { userData: { username: defaultValues.name } } , user: { age: defaultValues.age, birthday: defaultValues.birthday } };
+  const theCallOnly = only(nestedObject, ['user.name as person.userData.username', 'user.age', 'user.birthday']);
 
   expect(theCallOnly).toEqual(expected);
 });

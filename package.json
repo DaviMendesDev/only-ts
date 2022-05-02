@@ -19,7 +19,14 @@
     "type": "git",
     "url": "git+https://github.com/DaviMendesDev/only-ts.git"
   },
-  "keywords": ["only", "onlyjs", "onlyts", "only-ts", "only-like-laravel", "only-laravel"],
+  "keywords": [
+    "only",
+    "onlyjs",
+    "onlyts",
+    "only-ts",
+    "only-like-laravel",
+    "only-laravel"
+  ],
   "author": "DaviMendesDev",
   "license": "MIT",
   "bugs": {
@@ -27,7 +34,7 @@
   },
   "homepage": "https://github.com/DaviMendesDev/only-ts#readme",
   "devDependencies": {
-    "@types/jest": "^26.0.22",
+    "@types/jest": "^26.0.24",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
     "ts-jest": "^26.5.4",

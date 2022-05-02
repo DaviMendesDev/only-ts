@@ -41,19 +41,21 @@ function setValueToAlias(alias: string, value: any): M {
   }
 }
 
-export function deepMerge(obj1: M, obj2: M): M {
-  let result: M = new Object();
+export function deepMerge(to: M, from: M): M {
+  let result: M = to;
 
-  for (const key in obj2) {
-    if (key in obj1) result[key] = deepMerge(obj1[key], obj2[key]);
-    else result = { ...obj1, ...obj2 };
+  for (const key in from) {
+    if (key in to)
+      result[key] = deepMerge(to[key], from[key]);
+    else
+      result = { ...to, ...from };
   }
 
   return result;
 }
 
 export default function only(obj: M, keys: string[] | string): object {
-  let result: M = new Object();
+  let result: M = {};
 
   if (typeof keys === 'string') keys = keys.split(' ');
 
