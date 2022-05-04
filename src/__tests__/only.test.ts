@@ -27,6 +27,13 @@ const nestedObject: object = { user: personObject };
 const nestedArray: M = [];
 nestedArray.user = personArray;
 
+const jwtUser: M = {
+  user: {
+    ...defaultValues,
+    jwToken: 'any-token',
+  }
+};
+
 test(`should return only the 'age' from 'personObject' object`, () => {
   const anAgeOnlyObject = { age: defaultValues.age };
   const theCallOnly = only(personObject, ['age']);
@@ -207,3 +214,39 @@ test(`should return '${JSON.stringify({
 
   expect(theCallOnly).toEqual(expected);
 });
+
+test(`should return '${JSON.stringify({
+  person: defaultValues,
+})}' from '${JSON.stringify(nestedObject)}' that passes "user.name as username"`, () => {
+  const expected = {
+    person: defaultValues,
+  };
+  const theCallOnly = only(nestedObject, ['user as person']);
+
+  expect(theCallOnly).toEqual(expected);
+});
+
+// test(`should return '${JSON.stringify({
+//   person: {
+//     jwt: {
+//       config: {
+//         token: 'any-token',
+//       },
+//     },
+//     ...defaultValues,
+//   },
+// })}' from '${JSON.stringify(jwtUser)}' that passes "user.name as username"`, () => {
+//   const expected = {
+//     person: {
+//       jwt: {
+//         config: {
+//           token: 'any-token',
+//         },
+//       },
+//       ...defaultValues,
+//     },
+//   };
+//   const theCallOnly = only(jwtUser, ['user.jwToken as person.jwt.config.token', 'user as person']);
+//
+//   expect(theCallOnly).toEqual(expected);
+// });

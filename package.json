@@ -1,6 +1,6 @@
 {
   "name": "only-ts",
-  "version": "1.2.1",
+  "version": "1.3.5",
   "description": "A typescript library based on [only](https://github.com/tj/node-only) project",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
