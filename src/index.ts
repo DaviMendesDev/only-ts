@@ -42,7 +42,7 @@ function setValueToAlias(alias: string, value: any): M {
 }
 
 export function deepMerge(to: M, from: M): M {
-  let result: M = to;
+  let result: M = { ...to };
 
   for (const key in from) {
     if (key in to) result[key] = deepMerge(to[key], from[key]);
@@ -63,7 +63,7 @@ export default function only(obj: M, keys: string[] | string): object {
 
     const value = getValue(obj, key);
 
-    if (value) result = deepMerge(result, setValueToAlias(alias ?? key, value));
+    result = deepMerge(result, setValueToAlias(alias ?? key, value));
   }
 
   return result;

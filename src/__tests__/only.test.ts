@@ -226,27 +226,25 @@ test(`should return '${JSON.stringify({
   expect(theCallOnly).toEqual(expected);
 });
 
-// test(`should return '${JSON.stringify({
-//   person: {
-//     jwt: {
-//       config: {
-//         token: 'any-token',
-//       },
-//     },
-//     ...defaultValues,
-//   },
-// })}' from '${JSON.stringify(jwtUser)}' that passes "user.name as username"`, () => {
-//   const expected = {
-//     person: {
-//       jwt: {
-//         config: {
-//           token: 'any-token',
-//         },
-//       },
-//       ...defaultValues,
-//     },
-//   };
-//   const theCallOnly = only(jwtUser, ['user.jwToken as person.jwt.config.token', 'user as person']);
-//
-//   expect(theCallOnly).toEqual(expected);
-// });
+test(`testing false values too`, () => {
+  const payload = {
+      error: false,
+      message: "User saved successfully",
+      data: {
+          _id: "0fe14tu41-bg49j-yyut-14kf-003d114d",
+          name: "Davi Mendes Pimentel",
+          age: 18,
+      },
+  }
+
+  const expected = {
+  	error: false,
+  	message: "User saved successfully",
+  	ID: "0fe14tu41-bg49j-yyut-14kf-003d114d",
+  	NAME: "Davi Mendes Pimentel",
+  }
+
+  const theCallOnly = only(payload, ["data._id as ID", "data.name as NAME", "error", "message"])
+
+  expect(theCallOnly).toEqual(expected)
+})
