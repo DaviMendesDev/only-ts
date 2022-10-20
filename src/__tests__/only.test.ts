@@ -226,7 +226,7 @@ test(`should return '${JSON.stringify({
   expect(theCallOnly).toEqual(expected);
 });
 
-test(`whatever test bruh`, () => {
+test(`testing false values too`, () => {
   const payload = {
       error: false,
       message: "User saved successfully",
